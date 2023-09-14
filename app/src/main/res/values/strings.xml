@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Laba1</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">"Войти"</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string-array name="Emails">
+        <item>vasya_pupkin@gmail.com</item>
+        <item>vsem_hello@gmail.com</item>
+        <item>artem3232@mail.ru</item>
+        <item>vovan_V_tanke@gmail.com</item>
+        <item>s1mple@gmail.com</item>
+    </string-array>
+    <string-array name="Passwords">
+        <item>qwerty</item>
+        <item>kyky</item>
+        <item>art3m</item>
+        <item>KV1</item>
+        <item>123456</item>
+    </string-array>
+</resources>
