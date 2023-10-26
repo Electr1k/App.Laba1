@@ -1,17 +1,18 @@
 package com.example.laba1.Adapter
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.laba1.model.Recipe
 import com.example.laba1.R
 
 
 class AdapterListRecipes (
-    private val listener: (View) -> Unit,
     private val recipeList: List<Recipe>
 ): RecyclerView.Adapter<AdapterListRecipes.RecipeViewHolder>() {
 
@@ -25,9 +26,17 @@ class AdapterListRecipes (
         holder.recipe_dif.text = recipeList[position].Difficulty.toString()
         holder.recipe_cal.text = recipeList[position].Calorie.toString()
         holder.recipe_name.text = recipeList[position].Name
-        holder.itemView.setOnClickListener(
-            listener
-        )
+        holder.itemView.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putString("name", recipeList[position].Name)
+            bundle.putString("Calorie", recipeList[position].Calorie.toString())
+            bundle.putString("Difficulty", recipeList[position].Difficulty.toString())
+            bundle.putString("Time", recipeList[position].Time.toString())
+            bundle.putString("Ingredients", recipeList[position].Ingredients)
+
+            Navigation.findNavController(it).navigate(R.id.selected, bundle)
+        }
+
     }
 
     override fun getItemCount(): Int {

@@ -42,12 +42,11 @@ class ListRecipes: Fragment() {
                             "Сложность ${it.Difficulty}\n" +
                             "Ингредиенты: ${it.Ingredients}")
                 }
-                val adapter = AdapterListRecipes({
-                    Navigation.findNavController(view).navigate(R.id.selected)
-                }, list)
+                val adapter = AdapterListRecipes(list)
                 view.findViewById<RecyclerView>(R.id.list_recieps_rv).layoutManager = GridLayoutManager(requireContext(), 2)
                 view!!.findViewById<RecyclerView>(R.id.list_recieps_rv).adapter = adapter
             }
         })
         return view
-    }}
+    }
+}
