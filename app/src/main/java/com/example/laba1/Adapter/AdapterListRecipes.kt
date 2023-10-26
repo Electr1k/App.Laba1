@@ -22,8 +22,9 @@ class AdapterListRecipes (
 
     @SuppressLint("NewApi")
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        holder.recipe_name.text = recipeList[position].name
-        holder.recipe_substring.text = recipeList[position].substring
+        holder.recipe_dif.text = recipeList[position].Difficulty.toString()
+        holder.recipe_cal.text = recipeList[position].Calorie.toString()
+        holder.recipe_name.text = recipeList[position].Name
         holder.itemView.setOnClickListener(
             listener
         )
@@ -36,11 +37,13 @@ class AdapterListRecipes (
 
     class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var recipe_name: TextView
-        var recipe_substring: TextView
+        var recipe_dif: TextView
+        var recipe_cal: TextView
 
         init {
-            recipe_name = itemView.findViewById(R.id.name)
-            recipe_substring = itemView.findViewById(R.id.substring)
+            recipe_name= itemView.findViewById(R.id.name)
+            recipe_dif = itemView.findViewById(R.id.Difficulty)
+            recipe_cal = itemView.findViewById(R.id.Calorie)
         }
     }
 }
