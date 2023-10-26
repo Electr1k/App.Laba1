@@ -9,19 +9,11 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
-import com.example.laba1.model.User
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var listLogins: List<String>
     private lateinit var listPasswords: List<String>
-//    private val listUsers: List<User> = listOf(
-//        User(login = "vasya_pupkin@gmail.com", password = "qwerty"),
-//        User(login = "vsem_hello@gmail.com", password = "kyky"),
-//        User(login = "artem3232@mail.ru", password = "art3m"),
-//        User(login = "vovan_V_tanke@gmail.com", password = "KV1"),
-//        User(login = "s1mple@gmail.com", password = "123456")
-//    )
     private lateinit var loginFlied: EditText
     private lateinit var passwordFlied: EditText
     private lateinit var button: Button
