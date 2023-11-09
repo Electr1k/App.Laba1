@@ -1,5 +1,6 @@
 package com.example.laba1
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -9,24 +10,35 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
+import com.example.laba1.db.DataBase
+import com.example.laba1.db.entities.User
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var listLogins: List<String>
-    private lateinit var listPasswords: List<String>
     private lateinit var loginFlied: EditText
     private lateinit var passwordFlied: EditText
     private lateinit var button: Button
-
+    private lateinit var db: DataBase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listLogins = applicationContext.resources.getStringArray(R.array.Emails).toList()
-        listPasswords = applicationContext.resources.getStringArray(R.array.Passwords).toList()
+        db = DataBase.getDatabase(this)
+        thread {
+            db.getDao()
+                .createUser(User(login = "vasya_pupkin@gmail.com", password = "qwerty"))
+            db.getDao()
+                .createUser(User(login = "vsem_hello@gmail.com", password = "kyky"))
+            db.getDao()
+                .createUser(User(login = "artem3232@mail.ru", password = "art3m"))
+            db.getDao()
+                .createUser(User(login = "vovan_V_tanke@gmail.com", password = "KV1"))
+            db.getDao()
+                .createUser(User(login = "s1mple@gmail.com", password = "123456"))
+        }
         loginFlied = findViewById(R.id.login)
         passwordFlied = findViewById(R.id.password)
         button = findViewById(R.id.btn)
-        println(listLogins)
         // При обновлении значения логина цвет текста логина и пароля должен быть черным
         loginFlied.setOnKeyListener { v, keyCode, event ->
             loginFlied.setTextColor(Color.BLACK)
@@ -53,18 +65,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun login(){
         // Ищем подходящего юзера
-        if (listLogins.find{it == loginFlied.text.toString()}!=null){
-            if (listPasswords.find{it == passwordFlied.text.toString()}!=null){
-                Log.d("Success", "Success login")
-                val intent = Intent(this, BottomNavigationActivity::class.java)
-                startActivity(intent)
+
+
+
+
+        thread {
+            if (db.getDao().checkUserExists(loginFlied.text.toString())) {
+                if (db.getDao()
+                        .getUserByLogin(loginFlied.text.toString()).password == passwordFlied.text.toString()
+                ) {
+                    val id = db.getDao()
+                        .getUserByLogin(loginFlied.text.toString()).idUser!!
+                        getSharedPreferences("user", Context.MODE_PRIVATE).edit().putInt("id", id).apply() // записываем id текущего пользователя в sp
+                    runOnUiThread {
+                        Log.d("Success", "Success login")
+                        val intent = Intent(this, BottomNavigationActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    runOnUiThread {
+                        passwordFlied.setTextColor(Color.RED) // Неверный пароль
+                    }
+                }
+            } else {
+                runOnUiThread {
+                    loginFlied.setTextColor(Color.RED) // Неверный логин
+                }
             }
-            else{
-                passwordFlied.setTextColor(Color.RED) // Неверный пароль
-            }
-        }
-        else{
-            loginFlied.setTextColor(Color.RED) // Неверный логин
         }
     }
 
