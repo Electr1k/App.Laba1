@@ -9,10 +9,8 @@ import com.example.laba1.db.entities.UsersRecipesJunction
 
 @Dao
 interface DaoInterface {
-
     @Query("SELECT * FROM recipes")
     fun getAllRecipes(): List<Recipe>
-
     @Query("SELECT COUNT(*) FROM recipes")
     fun getCountRecipes(): Int
     @Insert
@@ -25,18 +23,14 @@ interface DaoInterface {
     fun getUserById(id: Int): User
     @Query("SELECT COUNT(*) FROM users WHERE login = :login")
     fun checkUserExists(login: String): Boolean
-
-
     @Query("SELECT recipes.* FROM recipes " +
             "INNER JOIN users_recipes_junction ON recipes.idRecipe = users_recipes_junction.idRecipe " +
             "WHERE users_recipes_junction.idUser = :userId")
     fun getFavoriteRecipesByUserId(userId: Int): List<Recipe>
     @Insert
     fun insertToFavoriteRecipes(r: UsersRecipesJunction)
-
     @Query("SELECT COUNT(*) FROM users_recipes_junction WHERE idUser = :userId AND idRecipe = :recipeId")
     fun checkFavoriteRecipeExist(userId: Int, recipeId: Int): Boolean
-
     @Query("DELETE FROM users_recipes_junction WHERE idUser = :userId AND idRecipe = :recipeId")
     fun deleteFavoriteRecipesByUserId(userId: Int, recipeId: Int)
 }
